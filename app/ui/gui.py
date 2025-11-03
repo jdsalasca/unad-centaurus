@@ -108,8 +108,9 @@ class GameWindow(UserInterface):
         self._root = tk.Tk()
         self._root.title("Batalla por Centauro")
         self._root.resizable(False, False)
-        self._music_enabled = tk.BooleanVar(value=False)
+        self._music_enabled = tk.BooleanVar(value=True)
         self._build_layout()
+        self._autostart_music()
 
     def start(self) -> None:
         self._root.mainloop()
@@ -187,3 +188,7 @@ class GameWindow(UserInterface):
                 self._music_enabled.set(False)
         else:
             self._controller.stop_music()
+
+    def _autostart_music(self) -> None:
+        if not self._controller.play_music():
+            self._music_enabled.set(False)
