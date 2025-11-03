@@ -39,17 +39,28 @@ class BattleServiceTestCase(unittest.TestCase):
             )
 
     def test_mixed_armies(self) -> None:
-        good_army = self._army_with(
-            Alignment.BENEVOLENT,
-            {"Fulo": 1, "Cari": 1, "Enano": 1, "Príncipe": 1},
-        )
-        evil_army = self._army_with(
-            Alignment.MALEVOLENT,
-            {"Trolli": 1, "Lurco": 1, "Hoggin": 1, "Fulano": 1, "Lolo": 1},
-        )
+        good_composition = {
+            race.name: 1
+            for race in self.catalog.list_all(Alignment.BENEVOLENT)
+            if race.name != "Osito"
+        }
+        evil_composition = {race.name: 1 for race in self.catalog.list_all(Alignment.MALEVOLENT)}
+
+        good_army = self._army_with(Alignment.BENEVOLENT, good_composition)
+        evil_army = self._army_with(Alignment.MALEVOLENT, evil_composition)
         result = self.service.resolve(good_army, evil_army)
+
+        # Strength of both compositions should be identical (14).
         self.assertEqual(BattleOutcome.TIE, result.outcome)
 
+    def test_alignment_validation(self) -> None:
+        good_army = self._army_with(Alignment.MALEVOLENT, {"Hoggin": 1})
+        evil_army = self._army_with(Alignment.BENEVOLENT, {"Osito": 1})
 
-if __name__ == "__main__":
-    unittest.main()
+        with self.assertRaises(ValueError):
+            self.service.resolve(good_army, evil_army)
+
+        good_army = self._army_with(Alignment.BENEVOLENT, {"Osito": 1})
+        evil_army = self._army_with(Alignment.BENEVOLENT, {"Osito": 1})
+        with self.assertRaises(ValueError):
+            self.service.resolve(good_army, evil_army)

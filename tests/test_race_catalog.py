@@ -22,7 +22,3 @@ class RaceCatalogTestCase(unittest.TestCase):
 
     def test_lookup_unknown_returns_none(self) -> None:
         self.assertIsNone(self.catalog.find_by_name("desconocido"))
-
-
-if __name__ == "__main__":
-    unittest.main()

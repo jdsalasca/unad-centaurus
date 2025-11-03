@@ -103,6 +103,42 @@ class GameControllerTestCase(unittest.TestCase):
         self.assertEqual((3, 3), (good_units, good_power))
         self.assertEqual((1, 2), (evil_units, evil_power))
 
+    def test_list_races_and_snapshot(self) -> None:
+        benevolent_races = self.controller.list_races(Alignment.BENEVOLENT)
+        self.assertGreater(len(benevolent_races), 0)
+        self.assertEqual({}, self.controller.army_snapshot(Alignment.BENEVOLENT))
 
-if __name__ == "__main__":
-    unittest.main()
+        osito = self.catalog.find_by_name("Osito")
+        assert osito
+        self.controller.set_units(osito, 1)
+        self.assertEqual({"Osito": 1}, self.controller.army_snapshot(Alignment.BENEVOLENT))
+
+    def test_load_persisted_armies_and_credits(self) -> None:
+        self.storage.saved[Alignment.BENEVOLENT.name] = {"Osito": 2}
+        self.storage.saved[Alignment.MALEVOLENT.name] = {"Hoggin": 1}
+
+        controller = GameController(
+            battle_service=BattleService(),
+            race_catalog=self.catalog,
+            storage=self.storage,
+            music_player=self.music,
+        )
+        self.assertEqual({"Osito": 2}, controller.army_snapshot(Alignment.BENEVOLENT))
+        self.assertEqual({"Hoggin": 1}, controller.army_snapshot(Alignment.MALEVOLENT))
+
+        credits = controller.credits()
+        self.assertTrue(any("autor" in line.lower() for line in credits))
+
+    def test_optional_dependencies_absent(self) -> None:
+        controller = GameController(
+            battle_service=BattleService(),
+            race_catalog=self.catalog,
+            storage=None,
+            music_player=None,
+        )
+        self.assertFalse(controller.play_music())
+        controller.reset_armies()  # Should not raise even without storage.
+
+    def test_fake_music_player_unavailable_play(self) -> None:
+        player = FakeMusicPlayer(available=False)
+        self.assertFalse(player.play())

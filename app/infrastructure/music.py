@@ -8,7 +8,8 @@ from abc import ABC, abstractmethod
 from array import array
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable, Optional, Sequence
+from threading import Lock
+from typing import Callable, ClassVar, Optional, Sequence
 
 
 class MusicPlayer(ABC):
@@ -31,6 +32,9 @@ class MusicPlayer(ABC):
 class RetroMusicPlayer(MusicPlayer):
     """Best-effort retro music player using pygame's mixer."""
 
+    _instance: ClassVar[Optional["RetroMusicPlayer"]] = None
+    _instance_lock: ClassVar[Lock] = Lock()
+
     audio_path: Optional[Path] = None
     sample_rate: int = 22_050
     bpm: int = 82
@@ -41,8 +45,19 @@ class RetroMusicPlayer(MusicPlayer):
     _available: bool = field(init=False, default=False)
     _sound: Optional[object] = field(init=False, default=None)
     _channel: Optional[object] = field(init=False, default=None)
+    _initialized: bool = field(init=False, default=False)
+
+    def __new__(cls, *args, **kwargs):
+        with cls._instance_lock:
+            if cls._instance is None:
+                cls._instance = super().__new__(cls)
+        return cls._instance
 
     def __post_init__(self) -> None:
+        if self._initialized:
+            return
+        self._initialized = True
+
         try:
             import pygame
 
@@ -79,6 +94,12 @@ class RetroMusicPlayer(MusicPlayer):
         if not self._available or not self._pygame:
             return False
         try:
+            if self._channel is not None and hasattr(self._channel, "get_busy"):
+                try:
+                    if self._channel.get_busy():
+                        return True
+                except Exception:
+                    pass
             if self._sound is not None:
                 self._channel = self._sound.play(loops=-1)
             else:
@@ -107,6 +128,20 @@ class RetroMusicPlayer(MusicPlayer):
     @property
     def is_available(self) -> bool:
         return self._available
+
+    @classmethod
+    def _reset_singleton(cls) -> None:
+        """Reset singleton state (only for tests)."""
+
+        with cls._instance_lock:
+            instance = cls._instance
+            cls._instance = None
+        if instance is not None:
+            try:
+                instance.stop()
+            except Exception:
+                pass
+            instance._initialized = False
 
 
 class ProceduralChiptune:

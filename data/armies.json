@@ -1,16 +1,15 @@
 {
   "BENEVOLENT": {
-    "Osito": 4,
+    "Osito": 2,
     "Príncipe": 2,
-    "Enano": 2,
-    "Cari": 1,
-    "Fulo": 2
+    "Enano": 1,
+    "Cari": 2,
+    "Fulo": 1
   },
   "MALEVOLENT": {
-    "Lolo": 4,
+    "Lolo": 2,
     "Fulano": 2,
-    "Hoggin": 1,
-    "Lurco": 2,
-    "Trolli": 1
+    "Hoggin": 4,
+    "Lurco": 2
   }
 }
