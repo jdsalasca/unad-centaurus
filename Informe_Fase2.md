@@ -8,25 +8,13 @@
 | Escuela | ECBTI - Escuela de Ciencias Basicas, Tecnologia e Ingenieria |
 | Curso | Fundamentos de Programacion (codigo 213022) |
 | Fase | Fase 2 - Variables, constantes y estructuras de control |
-| Estudiante | Juan David Salas Camargo (completar con identificacion y grupo) |
-| Programa academico | (Completar) |
-| Fecha de entrega | (Completar) |
+| Estudiante | Juan David Salas Camargo |
+| Identificacion | 1049650019 |
+| Grupo | 213022_30 |
+| Programa academico | Ingenieria de sistemas |
+| Fecha de entrega | 03-11-2025 |
 
----
 
-## Tabla 1. Informacion de la actividad
-
-| Aspecto | Descripcion |
-|---------|-------------|
-| Tipo de actividad | Independiente |
-| Momento de la evaluacion | Intermedio |
-| Unidad gestora | Escuela de Ciencias Basicas, Tecnologia e Ingenieria - ECBTI |
-| Puntaje | 100 |
-| Fecha de inicio | 28 de octubre de 2025 |
-| Fecha de cierre | 24 de noviembre de 2025 |
-| Horas estimadas | 24 |
-
----
 
 ## Situacion problema seleccionada
 
@@ -35,7 +23,17 @@
 | Juan David Salas Camargo | Problema 3 - Simulacion de la batalla en el planeta Centauro |
 
 **Descripcion breve del problema:** \
-El planeta Centauro se encuentra en guerra. Los ejercitos del bien y del mal estan conformados por razas con valores comprendidos entre 1 y 5. Se requiere un programa que permita configurar la cantidad de integrantes por raza, calcule la fuerza total de cada ejercito y determine si el bien gana, el mal gana o se produce un empate. Ejemplos proporcionados: 1 Osito pierde contra 1 Hoggin, 2 Ositos empatan contra 1 Hoggin, 3 Ositos ganan a 1 Hoggin.
+El planeta Centauro se encuentra en guerra. Los ejercitos del bien y del mal estan conformados por razas con valores comprendidos entre 1 y 5. Se requiere un programa que permita configurar la cantidad de integrantes por raza, calcule la fuerza total de cada ejercito y determine si el bien gana, el mal gana o se produce un empate. Los ejemplos proporcionados en la guia (1 Osito pierde contra 1 Hoggin, 2 Ositos empatan contra 1 Hoggin, 3 Ositos ganan a 1 Hoggin) sirven como casos de referencia para validar la solucion.
+
+### 3.1 Razas y valores utilizados
+
+| Bando benevolo | Valor | Bando malvado | Valor |
+|----------------|-------|---------------|-------|
+| Ositos | 1 | Lolos | 2 |
+| Principes | 2 | Fulanos | 2 |
+| Enanos | 3 | Hoggins | 2 |
+| Caris | 4 | Lurcos | 3 |
+| Fulos | 5 | Trollis | 5 |
 
 ---
 
@@ -52,7 +50,7 @@ El planeta Centauro se encuentra en guerra. Los ejercitos del bien y del mal est
 
 ---
 
-## Analisis y diseno
+## Analisis y diseño
 
 - **Paradigma empleado:** programacion estructurada con separacion por capas (controladores, servicios, infraestructura y UI).
 - **Modelo de datos:** razas parametrizadas con valor base; ejercitos almacenan pares (raza, cantidad). El archivo `data/armies.json` conserva la configuracion entre sesiones.
@@ -61,6 +59,7 @@ El planeta Centauro se encuentra en guerra. Los ejercitos del bien y del mal est
 - **Interfaz de usuario:** `ConsoleUI` y `GameWindow` comparten el mismo `GameController`. Se anadio un boton/menu para creditos y la musica procedimental se activa por defecto en la GUI.
 - **Musica procedimental:** `ProceduralChiptune` genera temas inspirados en RPG clasicos utilizando progresiones armonicas, escalas pentatonicas y proporciones aureas.
 - **Diagrama de flujo:** pendiente por documentar (se entregara en formato draw.io conforme a la guia).
+a
 
 ---
 
@@ -72,8 +71,26 @@ El planeta Centauro se encuentra en guerra. Los ejercitos del bien y del mal est
 - **Interfaces:** `app/ui/console.py` (menu textual) y `app/ui/gui.py` (Tkinter); ambos acceden al mismo controlador.
 - **Musica:** `app/infrastructure/music.py` - generador 8 bits y reproductor pygame.
 - **Pruebas automatizadas:** `python -m unittest` (ver carpeta `tests/`).
+- **Pasos sugeridos de ejecucion:**
+  1. Crear (opcional) un entorno virtual con `python -m venv .venv` y activarlo.
+  2. Instalar dependencias opcionales con `pip install pygame`.
+  3. Ejecutar `python main.py --mode console` o `python main.py --mode gui` segun la interfaz deseada.
+  4. Usar el menu/boton de creditos para verificar la informacion institucional.
 
 Para un respaldo completo, se anexan todos los archivos del proyecto en la carpeta entregable (`Grupo_Fase2_NombreApellido.zip`). El listado anterior indica los modulos clave para revisar la logica solicitada.
+
+---
+
+## Pruebas realizadas
+
+| Caso evaluado | Configuracion (Bien vs Mal) | Resultado esperado | Resultado obtenido |
+|---------------|-----------------------------|--------------------|--------------------|
+| Caso guia 1 | 1 Osito vs 1 Hoggin | Gana el mal | Gana el mal |
+| Caso guia 2 | 2 Ositos vs 1 Hoggin | Empate | Empate |
+| Caso guia 3 | 3 Ositos vs 1 Hoggin | Gana el bien | Gana el bien |
+| Prueba automatizada | `python -m unittest` | Todas las pruebas pasan | OK |
+
+Las pruebas manuales se realizaron ingresando los valores en la interfaz de consola. Las automatizadas validan persistencia, calculo de poderes y control de musica mediante `tests/test_game_controller.py`.
 
 ---
 
@@ -89,5 +106,3 @@ Para un respaldo completo, se anexan todos los archivos del proyecto en la carpe
 1. Python Software Foundation. *Python 3.12 Documentation*. Disponible en: https://docs.python.org/3/
 2. Pygame Community. *Pygame Documentation*. Disponible en: https://www.pygame.org/docs/
 3. Universidad Nacional Abierta y a Distancia (UNAD). *Guia de aprendizaje - Fase 2. Variables, constantes y estructuras de control*. 2025.
-
-> Nota: reemplace los campos marcados como "(Completar)" con la informacion personal correspondiente antes de generar el PDF final y comprimir la entrega.
