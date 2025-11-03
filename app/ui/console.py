@@ -33,6 +33,8 @@ class ConsoleUI(UserInterface):
                 self._handle_music(True)
             elif option == "6":
                 self._handle_music(False)
+            elif option == "7":
+                self._show_credits()
             elif option == "0":
                 print("Hasta pronto, que Centauro permanezca en equilibrio.")
                 break
@@ -63,6 +65,7 @@ Menú principal:
   4) Reiniciar ejércitos
   5) Activar música retro (si disponible)
   6) Detener música
+  7) Ver creditos
   0) Salir
 
 Resumen actual:
@@ -108,3 +111,9 @@ Resumen actual:
             if raw.isdigit():
                 return int(raw)
             print(" Ingresa un número entero mayor o igual a cero.")
+
+    def _show_credits(self) -> None:
+        print("\n=== Creditos del proyecto ===")
+        for line in self.controller.credits():
+            print(f"  {line}")
+        print()

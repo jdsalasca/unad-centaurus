@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+from typing import Dict, Optional, Sequence
 
 from app.domain.alignment import Alignment
 from app.domain.army import Army
@@ -13,6 +13,14 @@ from app.infrastructure.music import MusicPlayer
 from app.infrastructure.persistence import ArmyStorage
 from app.services.battle_service import BattleService
 from app.services.race_catalog import RaceCatalog
+
+CREDITS: Sequence[tuple[str, str]] = (
+    ("Autoría y programación", "Juan David Salas Camargo"),
+    ("Universidad", "Universidad Nacional Abierta y a Distancia (UNAD)"),
+    ("Curso", "Fundamentos de Programación - Código 213022"),
+    ("Música procedimental", "Generador chiptune integrado (procedural)"),
+    ("Herramientas adicionales", "Python 3.11+, Tkinter, pygame"),
+)
 
 
 @dataclass
@@ -87,3 +95,8 @@ class GameController:
         for army in self._armies.values():
             army.roster.clear()
         self._persist_armies()
+
+    def credits(self) -> tuple[str, ...]:
+        """Return formatted project credits."""
+
+        return tuple(f"{label}: {value}" for label, value in CREDITS)

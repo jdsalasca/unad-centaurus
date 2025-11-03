@@ -149,6 +149,8 @@ class GameWindow(UserInterface):
             command=self._toggle_music,
         ).grid(row=0, column=2, padx=(0, 8))
 
+        ttk.Button(buttons, text="Creditos", command=self._show_credits).grid(row=0, column=3, padx=(0, 8))
+
         self._result_label = ttk.Label(buttons, text="Selecciona las tropas y presiona Simular.")
         self._result_label.grid(row=1, column=0, columnspan=3, sticky=tk.W, pady=(8, 0))
 
@@ -192,3 +194,7 @@ class GameWindow(UserInterface):
     def _autostart_music(self) -> None:
         if not self._controller.play_music():
             self._music_enabled.set(False)
+
+    def _show_credits(self) -> None:
+        credits = "\n".join(self._controller.credits())
+        messagebox.showinfo("Creditos", f"Centaurus - Creditos\n\n{credits}")
