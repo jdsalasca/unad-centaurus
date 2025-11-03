@@ -53,7 +53,7 @@ El parámetro `--no-music` evita cargar el reproductor de música retro, útil s
 python main.py --mode gui --no-music
 ```
 
-Cuando `pygame` está instalado y se encuentra el archivo `assets/retro_theme.wav`, puedes activar o desactivar la música tanto en la interfaz gráfica como en la consola.
+Cuando `pygame` está instalado y se encuentra el archivo `assets/retro_theme.mp3`, puedes activar o desactivar la música tanto en la interfaz gráfica como en la consola.
 
 ### Persistencia de ejércitos
 
@@ -79,7 +79,7 @@ Se recomienda correr las pruebas después de realizar cambios en la lógica de b
   - `services/`: reglas de negocio, cálculo de resultados de batallas y catálogo de razas.
   - `ui/`: implementaciones de la interfaz de consola y GUI.
   - `utils/`: utilidades varias (p. ej. instalación de dependencias opcionales).
-- `assets/retro_theme.wav`: pista opcional de música retro.
+- `assets/retro_theme.mp3`: pista opcional de música retro.
 - `data/armies.json`: archivo JSON donde se persisten los ejércitos configurados.
 - `tests/`: pruebas automatizadas.
 

@@ -182,7 +182,7 @@ class GameWindow(UserInterface):
             if not self._controller.play_music():
                 messagebox.showinfo(
                     "Música no disponible",
-                    "No se pudo iniciar la música retro. Verifica pygame y assets/retro_theme.wav.",
+                    "No se pudo iniciar la música retro. Verifica pygame y assets/retro_theme.mp3.",
                 )
                 self._music_enabled.set(False)
         else:

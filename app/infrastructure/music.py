@@ -28,7 +28,7 @@ class MusicPlayer(ABC):
 class RetroMusicPlayer(MusicPlayer):
     """Best-effort retro music player using pygame's mixer."""
 
-    audio_path: Path = field(default_factory=lambda: Path("assets/retro_theme.wav"))
+    audio_path: Path = field(default_factory=lambda: Path("assets/retro_theme.mp3"))
     _pygame: Optional[object] = field(init=False, default=None)
     _available: bool = field(init=False, default=False)
 
