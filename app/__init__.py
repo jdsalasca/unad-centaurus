@@ -1,0 +1,1 @@
+"""Centaurus war simulation package."""
