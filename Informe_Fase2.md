@@ -80,6 +80,11 @@ a
 Para un respaldo completo, se anexan todos los archivos del proyecto en la carpeta entregable (`Grupo_Fase2_NombreApellido.zip`). El listado anterior indica los modulos clave para revisar la logica solicitada.
 
 ---
+## Diagrama de flujo
+![Diagrama de flujo del simulador](diagrama_app.drawio.png)
+
+---
+---
 
 ## Pruebas realizadas
 
