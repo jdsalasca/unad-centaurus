@@ -1,0 +1,23 @@
+# Bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# OS-specific garbage
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+
+# Project assets not tracked
+assets/retro_theme.wav
+assets/retro_theme.mp3
+
+# Persisted battle history (no version control)
+data/armies.json
